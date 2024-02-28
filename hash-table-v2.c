@@ -111,6 +111,7 @@ void hash_table_v2_add_entry(struct hash_table_v2 *hash_table,
 		{
 			exit(1);
 		}
+
 		return;
 	}
 	list_entry = calloc(1, sizeof(struct list_entry));

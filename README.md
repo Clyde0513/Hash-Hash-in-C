@@ -62,6 +62,8 @@ the hash_table_entry struct really helps the performance by a lot because now th
 struct can hold, not just on a SINGLE mutex where multiple threads are waiting all at once. So now the thread can wait much
 faster and use the critical section more efficiently and concurrently. Therefore, the speed is multiplied by 3x.
 
+Note that both V2 and V1 passes the valgrind (so no memory leak)
+
 ## Cleaning up
 
 ```shell
