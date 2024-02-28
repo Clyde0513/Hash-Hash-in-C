@@ -65,13 +65,9 @@ faster and use the critical section more efficiently and concurrently. Therefore
 Additional output for 300000 entries:
 bash-4.4$ ./hash-table-tester -t 8 -s 300000
 Generation: 430,764 usec
-Hash table base: 84,854,818 usec
-
-- 0 missing
-  Hash table v1: 94,748,565 usec
-- 0 missing
-  Hash table v2: 24,255,393 usec
-- 0 missing
+Hash table base: 84,854,818 usec: 0 missing
+Hash table v1: 94,748,565 usec: 0 missing
+Hash table v2: 24,255,393 usec: 0 missing
 
 Notice how the higher the amount of entries (or elements), the greater the performance is
 
