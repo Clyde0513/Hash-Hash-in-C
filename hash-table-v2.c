@@ -86,31 +86,21 @@ void hash_table_v2_add_entry(struct hash_table_v2 *hash_table,
 							 const char *key,
 							 uint32_t value)
 {
-	// int err = pthread_mutex_lock(&foo_mutex_1);
-	// if (err != 0)
-	// {
-	// 	exit(1);
-	// }
 	struct hash_table_entry *hash_table_entry = get_hash_table_entry(hash_table, key);
-	// err = pthread_mutex_unlock(&foo_mutex_1);
-	// if (err != 0)
-	// {
-	// 	exit(1);
-	// }
 
 	struct list_head *list_head = &hash_table_entry->list_head;
 
 	struct list_entry *list_entry = get_list_entry(hash_table, key, list_head);
+	/* Start of locking: the locking is done by locking the ability to update/create an entry,
+	//so no 2 threads can access the if statement, hence trying to update/add the same entry at the same time.
+	*/
 	int err = pthread_mutex_lock(&hash_table_entry->foo_mutex);
+
 	if (err != 0)
 	{
 		exit(1);
 	}
-	// err = pthread_mutex_lock(&foo_mutex_2);
-	// if (err != 0)
-	// {
-	// 	exit(1);
-	// }
+
 	/* Update the value if it already exists */
 	if (list_entry != NULL)
 	{
@@ -121,12 +111,9 @@ void hash_table_v2_add_entry(struct hash_table_v2 *hash_table,
 		{
 			exit(1);
 		}
-		// pthread_mutex_destroy(&foo_mutex_2);
-
 		return;
 	}
 	list_entry = calloc(1, sizeof(struct list_entry));
-
 	list_entry->key = key;
 	list_entry->value = value;
 
@@ -136,8 +123,6 @@ void hash_table_v2_add_entry(struct hash_table_v2 *hash_table,
 	{
 		exit(1);
 	}
-	// pthread_mutex_destroy(&foo_mutex_1);
-	// pthread_mutex_destroy(&foo_mutex_2);
 }
 
 uint32_t hash_table_v2_get_value(struct hash_table_v2 *hash_table,

@@ -1,10 +1,6 @@
 # Hash Hash Hash
 
-This project has 3 hash table implementation: Base, v1, and v2. Base implementation is the serial hash implementation while
-v1 and v2 are not serial. V1 should be slower than base while V2 should be significantly faster than V1 and base. The goal
-of this project is to add one mutex lock in V1 and as many mutex lock in V2. In V1, we only care about correctness while
-V2, we care about performance and correctness. So essentially, we want to make V2 and V1 safe from race conditions and
-do it in n-1 (cores) faster efficiency than just serial implementation.
+This project has 3 hash table implementation: Base, v1, and v2. Base implementation is the serial hash implementation while v1 and v2 are not serial. V1 should be slower than base while V2 should be significantly faster than V1 and base. The goal of this project is to add one mutex lock in V1 and as many mutex lock in V2. In V1, we only care about correctness while V2, we care about performance and correctness. So essentially, we want to make V2 and V1 safe from race conditions and do it in n-1 (cores) faster efficiency than just serial implementation.
 
 ## Building
 
