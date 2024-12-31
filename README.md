@@ -27,8 +27,8 @@ I put the mutex lock at the beginning of the function so that no multiple thread
 
 Version 1 is slower than the base version because this version is only using a SINGLE mutex and therefore all 8 threads are waiting for the one thread to be done, causing the thread overhead to be significantly high. An example output is as follows:
 
--Hash table base: 1,206,335 usec: 0 missing
--Hash table v1: 1,655,196 usec: 0 missing
+- Hash table base: 1,206,335 usec: 0 missing
+- Hash table v1: 1,655,196 usec: 0 missing
 
 Also because locking the entire funtion would cause every addition to be done sequentially instead of concurrently. Which means the CPU is significantly low and more work are not getting done at the same time.
 
@@ -43,31 +43,34 @@ In the `hash_table_v2_add_entry` function, instead of adding a single static mut
 ```
 
 An example output of V2 compare to V1 and base:
--Hash table base: 1,050,660 usec: 0 missing
-Hash table v1: 1,371,125 usec: 0 missing
--Hash table v2: 328,051 usec: 0 missing
+- Hash table base: 1,050,660 usec: 0 missing
+- Hash table v1: 1,371,125 usec: 0 missing
+- Hash table v2: 328,051 usec: 0 missing
 
--Generation: 72,491 usec
--Hash table base: 1,056,280 usec: 0 missing
--Hash table v1: 1,457,660 usec: 0 missing
--Hash table v2: 365,203 usec: 0 missing
+- Generation: 72,491 usec
+- Hash table base: 1,056,280 usec: 0 missing
+- Hash table v1: 1,457,660 usec: 0 missing
+- Hash table v2: 365,203 usec: 0 missing
 
--Generation: 73,833 usec
--Hash table base: 1,077,318 usec: 0 missing
--Hash table v1: 1,514,066 usec: 0 missing
--Hash table v2: 335,678 usec: 0 missing
+- Generation: 73,833 usec
+- Hash table base: 1,077,318 usec: 0 missing
+- Hash table v1: 1,514,066 usec: 0 missing
+- Hash table v2: 335,678 usec: 0 missing
 
 Out of these 3 trial runs, 2 out of the runs were that V2 is faster than the base by 3 times. Initializing the mutex inside
 the hash_table_entry struct really helps the performance by a lot because now the program is relies on how many mutex the
 struct can hold, not just on a SINGLE mutex where multiple threads are waiting all at once. So now the thread can wait much
 faster and use the critical section more efficiently and concurrently. Therefore, the speed is multiplied by 3x.
 
-Additional output for 300000 entries:
+- Additional output for 300000 entries:
+```shell
 bash-4.4$ ./hash-table-tester -t 8 -s 300000
-Generation: 430,764 usec
-Hash table base: 84,854,818 usec: 0 missing
-Hash table v1: 94,748,565 usec: 0 missing
-Hash table v2: 24,255,393 usec: 0 missing
+```
+- Generation: 430,764 usec
+- Hash table base: 84,854,818 usec: 0 missing
+- Hash table v1: 94,748,565 usec: 0 missing
+- Hash table v2: 24,255,393 usec: 0 missing
+
 
 Notice how the higher the amount of entries (or elements), the greater the performance is
 
